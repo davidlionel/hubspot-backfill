@@ -1,0 +1,7 @@
+.env
+node_modules/
+deals_raw.json
+deals_updates.json
+failed_writes.jsonl
+rejected.jsonl
+deals.csv
