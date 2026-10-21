@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Unit tests
+        run: node --test
+
+      - name: Fail if a secret was committed
+        run: |
+          if git ls-files | grep -qx '.env'; then
+            echo "::error::.env is tracked in git"
+            exit 1
+          fi
